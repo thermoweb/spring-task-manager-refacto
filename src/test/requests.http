@@ -1,0 +1,89 @@
+
+
+### CREATE a user
+POST http://localhost:8080/rest/users
+Content-Type: application/json
+
+{
+  "name": "USER",
+  "email": "user@praxedo.com"
+}
+
+### GET all users
+GET http://localhost:8080/rest/users
+
+
+### CREATE a task
+POST http://localhost:8080/rest/tasks
+Content-Type: application/json
+
+{
+  "id": "test-task",
+  "name": "test task",
+  "description": "description of the test task !"
+}
+
+### ASSIGN task to user
+POST http://localhost:8080/rest/tasks/test-task:assign
+Content-Type: application/json
+
+{
+  "userId": 1
+}
+
+### CHANGE task status to "in progress"
+PATCH http://localhost:8080/rest/tasks/test-task
+Content-Type: application/json
+
+{
+  "status": "IN_PROGRESS"
+}
+
+### GET user tasks
+GET http://localhost:8080/rest/users/1/tasks
+
+### CREATE a task
+POST http://localhost:8080/rest/tasks
+Content-Type: application/json
+
+{
+  "id": "new-task",
+  "name": "new task",
+  "description": "description of the new task !"
+}
+
+### CHANGE task status to "in progress"
+PATCH http://localhost:8080/rest/tasks/new-task
+Content-Type: application/json
+
+{
+  "status": "IN_PROGRESS"
+}
+
+
+### CHANGE task status to "in progress"
+PATCH http://localhost:8080/rest/tasks/new-task
+Content-Type: application/json
+
+{
+  "status": "TODO"
+}
+
+### CREATE a task
+POST http://localhost:8080/rest/users/1:create-task
+Content-Type: application/json
+
+{
+  "id": "user-task",
+  "name": "new user task",
+  "description": "description of the new user task !"
+}
+
+### CANCEL task
+POST http://localhost:8080/rest/tasks/new-task:cancel
+
+### COMPLETE task
+POST http://localhost:8080/rest/tasks/new-task:complete
+
+### GET all tasks
+GET http://localhost:8080/rest/tasks
