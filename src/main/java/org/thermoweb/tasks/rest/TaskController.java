@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 import org.thermoweb.tasks.model.Task;
 import org.thermoweb.tasks.model.TaskStatus;
 import org.thermoweb.tasks.model.User;
-import org.thermoweb.tasks.service.TaskService;
-import org.thermoweb.tasks.service.UserService;
+import org.thermoweb.tasks.service.TaskProxyService;
+import org.thermoweb.tasks.service.UserProxyService;
 
 @RestController
 @RequestMapping("/rest/tasks")
 public class TaskController {
 
-    private final TaskService taskService;
-    private final UserService userService;
+    private final TaskProxyService taskService;
+    private final UserProxyService userService;
 
-    public TaskController(TaskService taskService, UserService userService) {
+    public TaskController(TaskProxyService taskService, UserProxyService userService) {
         this.taskService = taskService;
         this.userService = userService;
     }

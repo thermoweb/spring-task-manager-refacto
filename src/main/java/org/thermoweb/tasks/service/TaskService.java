@@ -12,6 +12,7 @@ import org.thermoweb.tasks.model.TaskStatus;
 import org.thermoweb.tasks.model.User;
 
 @Service
+@Deprecated
 public class TaskService {
     private final TaskRepository repository;
 

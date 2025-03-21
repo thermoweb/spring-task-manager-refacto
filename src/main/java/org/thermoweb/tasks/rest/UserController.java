@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.thermoweb.tasks.model.Task;
 import org.thermoweb.tasks.model.User;
-import org.thermoweb.tasks.service.TaskService;
-import org.thermoweb.tasks.service.UserService;
+import org.thermoweb.tasks.service.TaskProxyService;
+import org.thermoweb.tasks.service.UserProxyService;
 
 @RestController
 @RequestMapping("/rest/users")
 public class UserController {
-    private final UserService userService;
-    private final TaskService taskService;
+    private final UserProxyService userService;
+    private final TaskProxyService taskService;
 
-    public UserController(UserService userService, TaskService taskService) {
+    public UserController(UserProxyService userService, TaskProxyService taskService) {
         this.userService = userService;
         this.taskService = taskService;
     }

@@ -19,9 +19,9 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.Mockito.mock;
 
-class TaskServiceTest {
+class TaskProxyServiceTest {
     private final TaskRepository taskRepository = mock(TaskRepository.class);
-    private final TaskService taskService = new TaskService(taskRepository);
+    private final TaskProxyService taskProxyService = new TaskProxyService(new TaskService(taskRepository));
 
     @Test
     void should_create_task() {
@@ -33,7 +33,7 @@ class TaskServiceTest {
 
 
         // WHEN
-        Task createdTask = taskService.create(task);
+        Task createdTask = taskProxyService.create(task);
 
         // THEN
         ArgumentCaptor<Task> taskCaptor = ArgumentCaptor.forClass(Task.class);
@@ -56,7 +56,7 @@ class TaskServiceTest {
 
 
         // WHEN
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> taskService.create(task));
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> taskProxyService.create(task));
 
         // THEN
         assertEquals("Task with id " + task.getId() + " already exists", exception.getMessage());
@@ -71,7 +71,7 @@ class TaskServiceTest {
         given(taskRepository.findById(task.getId())).willReturn(Optional.of(task));
 
         // WHEN
-        taskService.assign(task, user);
+        taskProxyService.assign(task, user);
 
         // THEN
         ArgumentCaptor<Task> taskCaptor = ArgumentCaptor.forClass(Task.class);
@@ -93,7 +93,7 @@ class TaskServiceTest {
         given(taskRepository.findById(task.getId())).willReturn(Optional.of(task));
 
         // WHEN
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> taskService.assign(task, user));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> taskProxyService.assign(task, user));
 
         // THEN
         assertEquals("only open tasks could be assigned", exception.getMessage());
@@ -111,7 +111,7 @@ class TaskServiceTest {
         taskToUpdate.setName("updated name");
 
         // WHEN
-        taskService.update(taskToUpdate);
+        taskProxyService.update(taskToUpdate);
 
         // THEN
         ArgumentCaptor<Task> taskCaptor = ArgumentCaptor.forClass(Task.class);
@@ -136,7 +136,7 @@ class TaskServiceTest {
         taskToUpdate.setName("updated name");
 
         // WHEN
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> taskService.update(taskToUpdate));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> taskProxyService.update(taskToUpdate));
 
         // THEN
         assertEquals("Task status TODO is not authorized to change status of task COMPLETED", exception.getMessage());
@@ -154,7 +154,7 @@ class TaskServiceTest {
         taskToUpdate.setName("updated name");
 
         // WHEN
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> taskService.update(taskToUpdate));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> taskProxyService.update(taskToUpdate));
 
         // THEN
         assertEquals("Task with new status TODO is not assigned", exception.getMessage());

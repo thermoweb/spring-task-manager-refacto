@@ -11,6 +11,7 @@ import org.thermoweb.tasks.db.UserRepository;
 import org.thermoweb.tasks.model.User;
 
 @Service
+@Deprecated
 public class UserService {
     private final UserRepository userRepository;
     private final Pattern emailPattern = Pattern.compile("^(.+)@(.+)$");
