@@ -69,8 +69,4 @@ public class TaskService {
             throw new IllegalArgumentException("Task with new status " + newStatus + " is not assigned");
         }
     }
-
-    public Optional<Task> getTask(String id) {
-        return repository.findById(id);
-    }
 }

@@ -9,6 +9,7 @@ import org.thermoweb.tasks.db.TaskRepository;
 import org.thermoweb.tasks.model.Task;
 import org.thermoweb.tasks.model.TaskStatus;
 import org.thermoweb.tasks.model.User;
+import org.thermoweb.tasks.modular.application.task.TaskAccessService;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -21,7 +22,9 @@ import static org.mockito.Mockito.mock;
 
 class TaskProxyServiceTest {
     private final TaskRepository taskRepository = mock(TaskRepository.class);
-    private final TaskProxyService taskProxyService = new TaskProxyService(new TaskService(taskRepository));
+    private final org.thermoweb.tasks.modular.domain.task.TaskRepository newTaskRepository = mock(org.thermoweb.tasks.modular.domain.task.TaskRepository.class);
+    private final TaskAccessService taskAccessService = new TaskAccessService(newTaskRepository);
+    private final TaskProxyService taskProxyService = new TaskProxyService(new TaskService(taskRepository), taskAccessService);
 
     @Test
     void should_create_task() {
